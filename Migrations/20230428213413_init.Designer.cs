@@ -12,7 +12,7 @@ using Movies_Tickets_Ecommerce_App.Data;
 namespace Movies_Tickets_Ecommerce_App.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230428204911_init")]
+    [Migration("20230428213413_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,7 +121,7 @@ namespace Movies_Tickets_Ecommerce_App.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("ProducerId")
+                    b.Property<int>("ProducerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
@@ -188,11 +188,15 @@ namespace Movies_Tickets_Ecommerce_App.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Movies_Tickets_Ecommerce_App.Models.Producer", null)
+                    b.HasOne("Movies_Tickets_Ecommerce_App.Models.Producer", "Producer")
                         .WithMany("Movies")
-                        .HasForeignKey("ProducerId");
+                        .HasForeignKey("ProducerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Cinema");
+
+                    b.Navigation("Producer");
                 });
 
             modelBuilder.Entity("Movies_Tickets_Ecommerce_App.Models.Actor", b =>

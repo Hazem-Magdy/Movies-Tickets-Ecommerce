@@ -119,7 +119,7 @@ namespace Movies_Tickets_Ecommerce_App.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("ProducerId")
+                    b.Property<int>("ProducerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
@@ -186,11 +186,15 @@ namespace Movies_Tickets_Ecommerce_App.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Movies_Tickets_Ecommerce_App.Models.Producer", null)
+                    b.HasOne("Movies_Tickets_Ecommerce_App.Models.Producer", "Producer")
                         .WithMany("Movies")
-                        .HasForeignKey("ProducerId");
+                        .HasForeignKey("ProducerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Cinema");
+
+                    b.Navigation("Producer");
                 });
 
             modelBuilder.Entity("Movies_Tickets_Ecommerce_App.Models.Actor", b =>

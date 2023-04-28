@@ -11,10 +11,7 @@ namespace Movies_Tickets_Ecommerce_App.Data
         public virtual DbSet<Movie> Movies { get; set; }
         public virtual DbSet<Actors_Movies> Actors_Movies { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
-        {
-            
-        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

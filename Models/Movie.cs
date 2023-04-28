@@ -24,7 +24,9 @@ namespace Movies_Tickets_Ecommerce_App.Models
         [ForeignKey("Cinema")]
         public int  CinemaId { get; set; }
         public virtual Cinema Cinema { get; set; }
-        
+        [ForeignKey("Producer")]
+        public int ProducerId { get; set; }
+        public virtual Producer Producer { get; set; }
         public virtual ICollection<Actors_Movies> ActorsMovies { get; set; } = new HashSet<Actors_Movies>();
 
 
