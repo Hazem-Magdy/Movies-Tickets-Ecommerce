@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Options;
+using Movies_Tickets_Ecommerce_App.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+// db context configrations
+builder.Services.AddDbContext<AppDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("Db")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
