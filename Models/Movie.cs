@@ -7,12 +7,13 @@ namespace Movies_Tickets_Ecommerce_App.Models
     public class Movie
     {
         public int Id { get; set; }
-
+        [Display(Name= "Movie Name")]
         public string Name { get; set; }
-
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
         public double Price { get; set; }
+        [Display(Name = "Image")]
         public string ImageURL { get; set; }
 
         public DateTime StartDate { get; set; }
