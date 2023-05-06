@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Movies_Tickets_Ecommerce_App.Models;
 
 namespace Movies_Tickets_Ecommerce_App.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext:IdentityDbContext
     {
         public virtual DbSet<Actor> Actors { get; set; }
         public virtual DbSet<Producer> Producers { get; set; }

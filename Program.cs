@@ -1,12 +1,18 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Options;
 using Movies_Tickets_Ecommerce_App.Data;
+using Movies_Tickets_Ecommerce_App.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // db context configrations
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Db")));
+
+builder.Services.AddScoped<IActorRepository, ActorRepository>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -26,11 +32,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Movies}/{action=Index}/{id?}");
 
 AppDbInitializer.Seed(app);
 

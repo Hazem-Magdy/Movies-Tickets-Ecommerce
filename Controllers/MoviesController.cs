@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Movies_Tickets_Ecommerce_App.Data;
 
@@ -12,6 +13,8 @@ namespace Movies_Tickets_Ecommerce_App.Controllers
         {
             context = _context;
         }
+
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var MoviesList = await context.Movies.Include(m=>m.Cinema).ToListAsync();
