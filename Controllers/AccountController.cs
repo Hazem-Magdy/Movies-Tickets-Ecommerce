@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Movies_Tickets_Ecommerce_App.Data.Static;
 using Movies_Tickets_Ecommerce_App.ViewModels;
 using System.ComponentModel.DataAnnotations;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -10,11 +11,13 @@ namespace Movies_Tickets_Ecommerce_App.Controllers
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> SignInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public AccountController(UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager)
+        public AccountController(UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager, RoleManager<IdentityRole> _roleManager)
         {
             userManager = _userManager;
             SignInManager = _signInManager;
+            roleManager = _roleManager;
         }
         [HttpGet]
         public IActionResult Registeration()
@@ -34,9 +37,13 @@ namespace Movies_Tickets_Ecommerce_App.Controllers
                 IdentityResult result = await userManager.CreateAsync(user, newAccount.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, false); // create cookie
+                    // add role to user
+                    //await userManager.AddToRoleAsync(user, UserRoles.User);
 
-                    return RedirectToAction("Index", "Movies");
+                    // create cookie to user
+                    await SignInManager.SignInAsync(user, false);
+
+                    return RedirectToAction("RegisterCompleted");
                 }
                 else
                 {
@@ -49,12 +56,13 @@ namespace Movies_Tickets_Ecommerce_App.Controllers
             return View(newAccount);
         }
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(/*string ReturnUrl = "~/Movies/Index"*/)
         {
+            //ViewData["ReturnUrl"] = ReturnUrl;
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginUser)
+        public async Task<IActionResult> Login(LoginViewModel loginUser/*, string ReturnUrl="~/Movies/Index"*/)
         {
             if (ModelState.IsValid == true)
             {
@@ -66,17 +74,20 @@ namespace Movies_Tickets_Ecommerce_App.Controllers
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index", "Movies");
+                        //return LocalRedirect(ReturnUrl);
                     }
                     else
                     {
 
-                        ModelState.AddModelError("", "invalid username or password");
+                        //ModelState.AddModelError("", "invalid username or password");
+                        TempData["Error"] = "invalid username or password";
 
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "in corect password or username");
+                    //ModelState.AddModelError("", "in corect password or username");
+                    TempData["Error"] = "invalid username or password";
                 }
 
             }
@@ -86,7 +97,36 @@ namespace Movies_Tickets_Ecommerce_App.Controllers
         public async Task<IActionResult> LogOut()
         {
             await SignInManager.SignOutAsync();
-            return RedirectToAction("Login","Account");
+            return RedirectToAction("Login", "Account");
+        }
+        [HttpGet]
+        public IActionResult AddRole()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddRole(RoleViewModel newRole)
+        {
+            if (ModelState.IsValid == true)
+            {
+
+                IdentityRole role = new IdentityRole() { Name = newRole.RoleName };
+                bool existRole = await roleManager.RoleExistsAsync(role.Name);
+                if (existRole== false)
+                {
+                    IdentityResult result = await roleManager.CreateAsync(role);
+                    if (result.Succeeded)
+                    {
+                        return View("AddRoleCompleted");
+                    }
+                }
+                else
+                {
+                    TempData["Error"] = "Role Already Exist";
+                    return View(newRole);
+                }
+            }
+            return View();
         }
 
     }
