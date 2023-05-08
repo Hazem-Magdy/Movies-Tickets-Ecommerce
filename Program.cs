@@ -12,6 +12,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("Db")));
 
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
+builder.Services.AddScoped<ICinemaRepositoray,CinemaRepository>();
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
 
