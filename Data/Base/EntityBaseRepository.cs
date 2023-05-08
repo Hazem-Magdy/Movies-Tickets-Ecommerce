@@ -33,13 +33,24 @@ namespace Movies_Tickets_Ecommerce_App.Data.Base
 
             await db.SaveChangesAsync();
         }
-        public async Task UpdateAsync(int id, T entity) 
+        
+        public async Task UpdateAsync(int id, T entity)
         {
-            EntityEntry entityEntry = db.Entry<T>(entity);
-            entityEntry.State = EntityState.Modified;
+            // Get the existing entity with the same 'Id' value, if any
+            var existingEntity = await db.Set<T>().FindAsync(id);
+
+            if (existingEntity != null)
+            {
+                // Detach the existing entity from the context to avoid conflicts
+                db.Entry(existingEntity).State = EntityState.Detached;
+            }
+
+            // Attach the new entity to the context
+            db.Entry(entity).State = EntityState.Modified;
 
             await db.SaveChangesAsync();
         }
-        
+
+
     }
 }

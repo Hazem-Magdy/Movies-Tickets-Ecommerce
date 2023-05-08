@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Movies_Tickets_Ecommerce_App.Models
 {
-    public class Producer:IEntityBase
+    public class Producer : IEntityBase
     {
         public int Id { get; set; }
         [Display(Name = "Profile Picture")]
