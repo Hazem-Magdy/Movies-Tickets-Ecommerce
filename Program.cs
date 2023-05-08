@@ -11,6 +11,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Db")));
 
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
+builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
 

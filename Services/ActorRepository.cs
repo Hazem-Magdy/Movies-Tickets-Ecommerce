@@ -25,26 +25,22 @@ namespace Movies_Tickets_Ecommerce_App.Services
 
             Actor actor = await db.Actors.FirstOrDefaultAsync(a => a.Id == id);
             db.Actors.Remove(actor);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
-        public async Task UpdateAsync(int id, Actor actor)
+        public async Task UpdateAsync(int id, Actor newActor)
         {
-
-            Actor oldActor = await db.Actors.FirstOrDefaultAsync(a => a.Id == id);
-            oldActor.ProfilePictureURL = actor.ProfilePictureURL;
-            oldActor.FullName = actor.FullName;
-            oldActor.Bio = actor.Bio;
-            db.SaveChanges();
+            db.Update(newActor);
+            await db.SaveChangesAsync();
 
         }
 
-        public async Task<int> AddAsync(Actor actor)
+        public async Task<Actor> AddAsync(Actor actor)
         {
-            db.Actors.Add(actor);
-            db.SaveChanges();
-            return actor.Id;
+            await db.Actors.AddAsync(actor);
+            await db.SaveChangesAsync();
+            return actor;
         }
 
-        
+
     }
 }

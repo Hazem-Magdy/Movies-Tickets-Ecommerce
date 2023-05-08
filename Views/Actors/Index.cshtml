@@ -29,13 +29,16 @@
                         @actor.Bio
                     </td>
                     <td class="align-middle">
-                            <a class="btn btn-primary"><i class="bi bi-pen"></i>Edit</a> |
-                            <a class="btn btn-info"><i class="bi bi-eye"></i>Details</a> |
-                            <a class="btn btn-danger text-light"><i class="bi bi-trash"></i>Delete</a>
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@actor.Id"><i class="bi bi-pen"></i>Edit</a> |
+                            <a class="btn btn-info" asp-action="Details" asp-route-id="@actor.Id"><i class="bi bi-eye"></i>Details</a> |
+                            <a class="btn btn-danger text-light" asp-action="Delete" asp-route-id="@actor.Id"><i class="bi bi-trash"></i>Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
     </div>
+</div>
+<div style="position:fixed;right:25px;bottom:25px" class="text-white" >
+    <a asp-action="Create" asp-controller="Actors" class="btn btn-success"><i class="bi bi-plus-circle"></i> Add New</a>
 </div>

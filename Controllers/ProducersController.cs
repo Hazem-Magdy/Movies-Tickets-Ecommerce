@@ -1,21 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Movies_Tickets_Ecommerce_App.Data;
+using Movies_Tickets_Ecommerce_App.Services;
 
 namespace Movies_Tickets_Ecommerce_App.Controllers
 {
     public class ProducersController : Controller
     {
-        private readonly AppDbContext context;
+        private readonly IProducerRepository repository;
 
-        public ProducersController(AppDbContext _context) {
+        public ProducersController(IProducerRepository _repository) {
 
-            context = _context;
+            repository = _repository;
         }
         public async Task<IActionResult>Index()
         {
-            var ProducersList = await context.Producers.ToListAsync();
+            var ProducersList = await repository.GetAllAsync();
             return View(ProducersList);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var ProducerDetails = repository.GetByIDAsync(id);
+            if(ProducerDetails == null)
+            {
+                return View("NotFound");
+            }
+            return View(ProducerDetails);
         }
     }
 }

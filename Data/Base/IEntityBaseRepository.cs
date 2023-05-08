@@ -1,6 +1,6 @@
 ﻿using Movies_Tickets_Ecommerce_App.Models;
 
-namespace Movies_Tickets_Ecommerce_App.Services
+namespace Movies_Tickets_Ecommerce_App.Data.Base
 {
     public interface IEntityBaseRepository<T> where T : class, IEntityBase, new()
     {

@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Movies_Tickets_Ecommerce_App.Data.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Movies_Tickets_Ecommerce_App.Models
 {
-    public class Producer
+    public class Producer:IEntityBase
     {
         public int Id { get; set; }
         [Display(Name = "Profile Picture")]
