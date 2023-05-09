@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Movies_Tickets_Ecommerce_App.Data;
 using Movies_Tickets_Ecommerce_App.Models;
+using System.Linq.Expressions;
 
 namespace Movies_Tickets_Ecommerce_App.Data.Base
 {
@@ -51,6 +52,18 @@ namespace Movies_Tickets_Ecommerce_App.Data.Base
             await db.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] includeProperties)
+        {
+            IQueryable<T> query = db.Set<T>();
+            query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+            return await query.ToListAsync();
+        }
 
+        public async Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] includeProperties)
+        {
+            IQueryable<T> query = db.Set<T>();
+            query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+            return await query.FirstOrDefaultAsync(n => n.Id == id);
+        }
     }
 }

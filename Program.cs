@@ -13,7 +13,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("Db")));
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddScoped<ICinemaRepositoray,CinemaRepository>();
-
+builder.Services.AddScoped<IMoviesRepository, MoviesRepository>();
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
 

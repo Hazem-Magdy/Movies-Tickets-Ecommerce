@@ -1,10 +1,11 @@
-﻿using Movies_Tickets_Ecommerce_App.Data.Enums;
+﻿using Movies_Tickets_Ecommerce_App.Data.Base;
+using Movies_Tickets_Ecommerce_App.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Movies_Tickets_Ecommerce_App.Models
 {
-    public class Movie
+    public class Movie :IEntityBase
     {
         public int Id { get; set; }
         [Display(Name= "Movie Name")]

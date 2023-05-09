@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Movies_Tickets_Ecommerce_App.Data.Static;
 using Movies_Tickets_Ecommerce_App.ViewModels;
 using System.ComponentModel.DataAnnotations;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
